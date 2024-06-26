@@ -19,7 +19,7 @@ jobs:
         run: >-
           javac -cp
           "../testresources/junit-platform-console-standalone-1.6.0.jar"
-          "./LoginAndRegistrationPortal/LoginAndRegistrationPortal.java" "./ LoginAndRegistrationPortal/Task.java"
+          "./LoginAndRegistrationPortal/LoginAndRegistrationPortal.java" "./LoginAndRegistrationPortal/Task.java"
           "../test/ LoginAndRegistrationPortal/LoginAndRegistrationPortalTest.java"
       - name: List contents of src directory after compile
         working-directory: ./src/LoginAndRegistrationPortal
