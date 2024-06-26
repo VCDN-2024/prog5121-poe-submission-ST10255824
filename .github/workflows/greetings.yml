@@ -1,0 +1,37 @@
+name: Workflow
+'on':
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: null
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: List contents
+        run: ls
+      - name: compile classes
+        working-directory: ./src
+        run: >-
+          javac -cp
+          "../testresources/junit-platform-console-standalone-1.6.0.jar"
+          "./LoginAndRegistrationPortal/LoginAndRegistrationPortal.java" "./ LoginAndRegistrationPortal/Task.java"
+          "../test/ LoginAndRegistrationPortal/LoginAndRegistrationPortalTest.java"
+      - name: List contents of src directory after compile
+        working-directory: ./src/LoginAndRegistrationPortal
+        run: ls
+      - name: create testresources/LoginAndRegistrationPortal directory
+        run: mkdir -p ./testresources/LoginAndRegistrationPortal
+      - name: copy compiled classes to testresources directory
+        working-directory: ./src/LoginAndRegistrationPortal
+        run: cp -t  "../../test/LoginAndRegistrationPortal " LoginAndRegistrationPortal.class Task.class
+      - name: copy compiled Test classes to testresources directory
+        working-directory: ./test/LoginAndRegistrationPortal
+        run: cp -t  "../../testresources/LoginAndRegistrationPortal" LoginAndRegistrationPortalTest.class
+      - name: List contents test package
+        working-directory: ./test/LoginAndRegistrationPortal
+        run: ls
